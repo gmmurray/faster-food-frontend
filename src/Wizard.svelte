@@ -61,50 +61,56 @@
   };
 </script>
 
-<div class="pm-surface">
-  <p>Current step: {currentStep}</p>
-  <p><button on:click={handleResetClick}>Start over</button></p>
-  <br class="step-divider" />
-</div>
+<div class="pm-bg-light pm-padded pm-stacked">
+  <div class="col-group">
+    <div class="col-3">
+      <button on:click={handleResetClick}>Start over</button>
+    </div>
+    <div class="col-9">
+      <progress value={currentStep} max="5" />
+    </div>
+  </div>
+  <div class="pm-stacked">
+    {#if currentStep === 0}
+      <Intro />
+    {:else if currentStep === 1}
+      <SelectCategories
+        bind:selectedCategories={fiveSelectedCategories}
+        bind:loading
+      />
+    {:else if currentStep === 2}
+      <SelectParameters bind:zipCode bind:resultCount />
+    {:else if currentStep === 3}
+      <SelectRestaurants
+        bind:selectedRestaurants={threeSelectedRestaurants}
+        bind:requestParams={restaurantRequestParams}
+        bind:loading
+      />
+    {:else if currentStep === 4}
+      <SelectWinner
+        bind:selectedRestaurants={threeSelectedRestaurants}
+        bind:finalRestaurant
+      />
+    {:else if currentStep === 5}
+      <Result bind:finalRestaurant />
+    {/if}
+  </div>
 
-{#if currentStep === 0}
-  <Intro />
-{:else if currentStep === 1}
-  <SelectCategories
-    bind:selectedCategories={fiveSelectedCategories}
-    bind:loading
-  />
-{:else if currentStep === 2}
-  <SelectParameters bind:zipCode bind:resultCount />
-{:else if currentStep === 3}
-  <SelectRestaurants
-    bind:selectedRestaurants={threeSelectedRestaurants}
-    bind:requestParams={restaurantRequestParams}
-    bind:loading
-  />
-{:else if currentStep === 4}
-  <SelectWinner
-    bind:selectedRestaurants={threeSelectedRestaurants}
-    bind:finalRestaurant
-  />
-{:else if currentStep === 5}
-  <Result bind:finalRestaurant />
-{/if}
-
-<div>
-  <button
-    type="button"
-    on:click={handlePrevClick}
-    class="pm-btn-primary"
-    disabled={!canClickPrev || loading}>Prev</button
-  >
-  <button
-    type="button"
-    on:click={handleNextClick}
-    class="pm-btn-primary"
-    disabled={!canClickNext || loading || !wizardValid}
-    >{currentStep === 0 ? 'Start' : 'Next'}</button
-  >
+  <div class="pm-text-center">
+    <button
+      type="button"
+      on:click={handlePrevClick}
+      class="pm-btn-light"
+      disabled={!canClickPrev || loading}>Prev</button
+    >
+    <button
+      type="button"
+      on:click={handleNextClick}
+      class="pm-btn-primary"
+      disabled={!canClickNext || loading || !wizardValid}
+      >{currentStep === 0 ? 'Start' : 'Next'}</button
+    >
+  </div>
 </div>
 
 <style>

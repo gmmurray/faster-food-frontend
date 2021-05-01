@@ -57,8 +57,11 @@
 </script>
 
 <div>
-  <h3>Select five categories</h3>
-  <button on:click={handleSelectRandom}>Random</button>
+  <div class="pm-text-center">
+    <h3>Select five categories</h3>
+    <button on:click={handleSelectRandom} class="pm-btn-gradient">Random</button
+    >
+  </div>
   {#if error}
     {error}
   {/if}

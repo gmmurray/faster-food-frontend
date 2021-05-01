@@ -1,4 +1,4 @@
 <script lang="ts">
 </script>
 
-<h4>Click start below to begin</h4>
+<div class="pm-text-center"><h4>Click start below to begin</h4></div>
